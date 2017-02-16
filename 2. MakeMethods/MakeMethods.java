@@ -76,11 +76,13 @@ public class MakeMethods {
 
   public static double sqrt(double x, double epsilon) {
     if (x < 0 || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    if (x == 1) { return 1; }
     return rootHelp(0, x, x, epsilon, 2);
   }
 
   public static double root(int n, double x, double epsilon) {
     if ((x < 0 && n%2 == 0) || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    if (x == 1) { return 1; }
     if (n > 0) {
       if (x >= 0) {
         if (x > 0 && x < 1) { return 1 / rootHelp(0, 1/x, 1/x, epsilon, n); }
