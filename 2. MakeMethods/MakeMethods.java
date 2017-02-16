@@ -25,7 +25,7 @@ public class MakeMethods {
         case "power": System.out.println(power(Double.parseDouble(args[1]), Integer.parseInt(args[2])));
           break;
         default:
-        System.out.println("BAD DATA");
+        throw new IllegalArgumentException();
       }
     } catch (Exception e) {
       System.err.println(e);
@@ -33,7 +33,7 @@ public class MakeMethods {
   }
 
   public static java.math.BigInteger factorial(int n) {
-    if (n < 0) { throw new IndexOutOfBoundsException(); }
+    if (n < 0) { throw new IllegalArgumentException(); }
     java.math.BigInteger factorial = new java.math.BigInteger("1");
     for (int i = 2; i <= n; i++) {
       factorial = factorial.multiply(new java.math.BigInteger(Integer.toString(i)));
@@ -42,7 +42,7 @@ public class MakeMethods {
   }
 
   public static java.math.BigInteger fibonacci(int n) {
-    if (n < 0) { throw new IndexOutOfBoundsException(); }
+    if (n < 0) { throw new IllegalArgumentException(); }
     if (n == 0) { return new java.math.BigInteger("0"); }
     if (n == 1) { return new java.math.BigInteger("1"); }
     java.math.BigInteger fibonacci = new java.math.BigInteger("1");
@@ -56,13 +56,13 @@ public class MakeMethods {
   }
 
   public static long gcd(long m, long n) {
-    if (n == 0 || m == 0) { throw new IndexOutOfBoundsException(); }
+    if (n == 0 || m == 0) { throw new IllegalArgumentException(); }
     if (m % n == 0) { return Math.abs(n); }
     return gcd(n, m % n);
   }
 
   public static long lcm(long m, long n) {
-    if (n == 0 || m == 0) { throw new IndexOutOfBoundsException(); }
+    if (n == 0 || m == 0) { throw new IllegalArgumentException(); }
     return m * n / gcd(m, n);
   }
 
@@ -75,13 +75,13 @@ public class MakeMethods {
   }
 
   public static double sqrt(double x, double epsilon) {
-    if (x < 0 || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    if (x < 0 || epsilon < 0) { throw new ArithmeticException(); }
     if (x == 1) { return 1; }
     return rootHelp(0, x, x, epsilon, 2);
   }
 
   public static double root(int n, double x, double epsilon) {
-    if ((x < 0 && n%2 == 0) || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    if ((x < 0 && n%2 == 0) || epsilon < 0) { throw new ArithmeticException(); }
     if (x == 1) { return 1; }
     if (n > 0) {
       if (x >= 0) {
