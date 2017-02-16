@@ -1,29 +1,29 @@
 public class MakeMethods {
   public static void main (String[] args) {
     String function = args[0];
-    switch (function) {
-      case "factorial": int n1 = Integer.parseInt(args[1]); System.out.println(factorial(n1));
-        break;
-      case "fibonacci":
-        try {
-          int n2 = Integer.parseInt(args[1]);
-          System.out.println(fibonacci(n2));
-        } catch (Exception e) { throw new IllegalArgumentException(); }
-        break;
-      case "gcd": long m1 = Long.parseLong(args[1]); long n3 = Long.parseLong(args[2]); System.out.println(gcd(m1, n3));
-        break;
-      case "lcm": long m2 = Long.parseLong(args[1]); long n4 = Long.parseLong(args[2]); System.out.println(lcm(m2, n4));
-        break;
-      case "poly":
-        break;
-      case "sqrt": Double x2 = Double.parseDouble(args[1]); Double epsilon = Double.parseDouble(args[1]); System.out.println(sqrt(x2, epsilon));
-        break;
-      case "root": int n5 = Integer.parseInt(args[1]); Double x3 = Double.parseDouble(args[2]); Double epsilon1 = Double.parseDouble(args[3]); System.out.println(root(n5, x3, epsilon1));
-        break;
-      case "power": Double x4 = Double.parseDouble(args[1]); int n6 = Integer.parseInt(args[2]); System.out.println(power(x4, n6));
-        break;
-      default:
-      System.out.println("BAD DATA");
+    try {
+      switch (function) {
+        case "factorial": System.out.println(factorial(Integer.parseInt(args[1])));
+          break;
+        case "fibonacci": System.out.println(fibonacci(Integer.parseInt(args[1])));
+          break;
+        case "gcd": System.out.println(gcd(Long.parseLong(args[1]), Long.parseLong(args[2])));
+          break;
+        case "lcm": System.out.println(lcm(Long.parseLong(args[1]), Long.parseLong(args[2])));
+          break;
+        case "poly":
+          break;
+        case "sqrt": System.out.println(sqrt(Double.parseDouble(args[1]), Double.parseDouble(args[1])));
+          break;
+        case "root": System.out.println(root(Integer.parseInt(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3])));
+          break;
+        case "power": System.out.println(power(Double.parseDouble(args[1]), Integer.parseInt(args[2])));
+          break;
+        default:
+        System.out.println("BAD DATA");
+      }
+    } catch (Exception e) {
+      System.err.println(e);
     }
   }
 
