@@ -1,7 +1,7 @@
 public class MakeMethods {
   public static void main (String[] args) {
-    String function = args[0];
     try {
+      String function = args[0];
       switch (function) {
         case "factorial": System.out.println(factorial(Integer.parseInt(args[1])));
           break;
