@@ -12,8 +12,13 @@ public class MakeMethods {
         case "lcm": System.out.println(lcm(Long.parseLong(args[1]), Long.parseLong(args[2])));
           break;
         case "poly":
+          double[] coeff = new double[args.length- 2];
+          for (int i = 0; i < args.length - 2; i++) {
+            coeff[i] = Double.parseDouble(args[i + 2]);
+          }
+          System.out.println(poly(Double.parseDouble(args[1]), coeff));
           break;
-        case "sqrt": System.out.println(sqrt(Double.parseDouble(args[1]), Double.parseDouble(args[1])));
+        case "sqrt": System.out.println(sqrt(Double.parseDouble(args[1]), Double.parseDouble(args[2])));
           break;
         case "root": System.out.println(root(Integer.parseInt(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3])));
           break;
@@ -28,7 +33,6 @@ public class MakeMethods {
   }
 
   public static java.math.BigInteger factorial(int n) {
-    //CHECK
     if (n < 0) { throw new IndexOutOfBoundsException(); }
     java.math.BigInteger factorial = new java.math.BigInteger("1");
     for (int i = 2; i <= n; i++) {
@@ -52,29 +56,60 @@ public class MakeMethods {
   }
 
   public static long gcd(long m, long n) {
-    throw new UnsupportedOperationException();
+    if (n == 0 || m == 0) { throw new IndexOutOfBoundsException(); }
+    if (m % n == 0) { return Math.abs(n); }
+    return gcd(n, m % n);
   }
 
   public static long lcm(long m, long n) {
-    throw new UnsupportedOperationException();
+    if (n == 0 || m == 0) { throw new IndexOutOfBoundsException(); }
+    return m * n / gcd(m, n);
   }
 
   public static double poly(double x, double[] coeff) {
-    throw new UnsupportedOperationException();
+    double polySum = 0;
+    for (int i = coeff.length - 1; i >= 0; i--) {
+      polySum = coeff[i] + (x * polySum);
+    }
+    return polySum;
   }
 
   public static double sqrt(double x, double epsilon) {
-    throw new UnsupportedOperationException();
+    if (x < 0 || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    return rootHelp(0, x, x, epsilon, 2);
   }
 
   public static double root(int n, double x, double epsilon) {
-    throw new UnsupportedOperationException();
+    if ((x < 0 && n%2 == 0) || epsilon < 0) { throw new IndexOutOfBoundsException(); }
+    if (n > 0) {
+      if (x >= 0) {
+        if (x > 0 && x < 1) { return 1 / rootHelp(0, 1/x, 1/x, epsilon, n); }
+        return rootHelp(0, x, x, epsilon, n);
+      }
+      if (x < 0 && x > -1) { return -1 / rootHelp(0, 1/-x, 1/-x, epsilon, n); }
+      return -1 * rootHelp(0, -x, -x, epsilon, n);
+    }
+    if (x >= 0) {
+      if (x > 0 && x < 1) { return rootHelp(0, 1/x, 1/x, epsilon, -n); }
+      return 1 / rootHelp(0, x, x, epsilon, -n);
+    }
+    if (x < 0 && x > -1) { return -1 * rootHelp(0, 1/-x, 1/-x, epsilon, -n); }
+    return -1 / rootHelp(0, -x, -x, epsilon, -n);
   }
 
   public static double power(double x, int n) {
-    throw new UnsupportedOperationException();
+    if (n == 2) { return x * x; }
+    if (n % 2 != 0) { return x * power(x, n-1); }
+    double save = power(x, n/2);
+    return save * save;
   }
 
   //HELPER METHODS
-
+  private static double rootHelp(double left, double right, double x, double epsilon, int n) {
+    double half = (left + right) * 0.5;
+    double halfToTheNth = power(half, n);
+    if (halfToTheNth > (x - epsilon) && halfToTheNth < (x + epsilon)) { return half; }
+    if (halfToTheNth > x) { return rootHelp(left, half, x, epsilon, n); }
+    else { return rootHelp(half, right, x, epsilon, n); }
+  }
 }
