@@ -63,7 +63,7 @@ public class MakeMethods {
 
   public static long lcm(long m, long n) {
     if (n == 0 || m == 0) { throw new IllegalArgumentException(); }
-    return m * n / gcd(m, n);
+    return Math.abs(m * n / gcd(m, n));
   }
 
   public static double poly(double x, double[] coeff) {
