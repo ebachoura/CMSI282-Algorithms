@@ -21,31 +21,36 @@ public class SumoSolver {
   int budget;
 
   public SumoSolver (int b, int items, int[] p, int[] g) {
-    chart = new Tuple[b][items];
+    chart = new Tuple[b + 1][items];
+    for (int i = 0; i < p.length; i++) {
+      chart[0][i] = new Tuple(0,0,0);
+    }
     prices = p;
     gains = g;
     budget = b;
   }
 
   public String solve() {
-    solveHelp(budget - 1, prices.length - 1);
-    Tuple answerBox = chart[budget - 1][prices.length - 1];
+    solveHelp(budget, prices.length - 1);
+    Tuple answerBox = chart[budget][prices.length - 1];
     return answerBox.toString();
   }
 
-  // public void solveHelp(int budget, int numberOfItems) {
-  //   chart[budget - 1][numberOfItems - 1] = new Tuple(2,97,103);
-  // }
-
-  public void solveHelp(int x, int y) {
-    if (prices[y] < x) {
+  private void solveHelp(int x, int y) {
+    if (prices[y] <= x) {
       chart[x][y] = new Tuple(1, prices[y], gains[y]);
-      chart[x][y] = chart[x][y].add(solveHelp(x - prices[y], y));
-    } else {
-      chart[x][y] = Tuple.IMPOSSIBLE;
+      if (chart[x - prices[y]][y] == null) { solveHelp(x - prices[y], y); }
+      if (chart[x - prices[y]][y] != null) {
+        chart[x][y] = chart[x][y].add(chart[x - prices[y]][y]);
+      } else { chart[x][y] = null; }
     }
 
-
-
+    if (y != 0) {
+      if (chart[x][y-1] == null) { solveHelp(x,y-1); }
+      if (chart[x][y] == null && chart[x][y-1] == null) {
+      } else if ((chart[x][y-1] != null && chart[x][y] == null) || (chart[x][y-1].getElement(2) > chart[x][y].getElement(2))) {
+        chart[x][y] = chart[x][y-1];
+      }
+    }
   }
 }
