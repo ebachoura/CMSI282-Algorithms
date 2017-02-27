@@ -31,32 +31,28 @@ public class SumoSolver {
   }
 
   public String solve() {
-
-    int tempBudget = budget;
-    Tuple answerBox = chart[tempBudget][prices.length - 1];
-    while (answerBox == null) {
-      solveHelp(tempBudget, prices.length - 1);
-      tempBudget--;
-    }
+    Tuple answerBox = chart[budget][prices.length - 1];
+    solveHelp(budget, prices.length - 1);
     return answerBox.toString(prices, gains);
   }
 
   private void solveHelp(int x, int y) {
-    if (prices[y] <= x && chart[x][y].getElement(y) != 1) {
-      chart[x][y] = new Tuple(prices.length);
-      chart[x][y].setElement(y, 1);
-      if (chart[x - prices[y]][y] == null) { solveHelp(x - prices[y], y); }
-      if (chart[x - prices[y]][y] != null) {
-        chart[x][y] = chart[x][y].add(chart[x - prices[y]][y]);
-      } else { chart[x][y] = null; }
-    }
-
+    System.out.println(x + ", " + y);
     if (y != 0) {
-      if (chart[x][y-1] == null) { solveHelp(x,y-1); }
-      if (chart[x][y] == null && chart[x][y-1] == null) {
-      } else if ((chart[x][y-1] != null && chart[x][y] == null) || (chart[x][y-1].gains(gains) > chart[x][y].gains(gains))) {
-        chart[x][y] = chart[x][y-1];
+      if (prices[y] <= x) {
+        if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); }
+        chart[x][y].setElement(y, 1);
+        if (chart[x - prices[y]][y - 1] == null) { solveHelp(x - prices[y], y - 1); }
+        if (chart[x - prices[y]][y - 1] != null) {
+          chart[x][y] = chart[x][y].add(chart[x - prices[y]][y - 1]);
+        } else { chart[x][y] = null; }
+      } else {
+        if (chart[x][y - 1] == null) { solveHelp(x, y - 1); }
+        if (chart[x][y] == null && chart[x][y - 1] == null) {
+        } else if ((chart[x][y-1] != null && chart[x][y] == null) || (chart[x][y-1].gains(gains) > chart[x][y].gains(gains))) {
+          chart[x][y] = chart[x][y - 1];
+        }
       }
-    }
+    } return;
   }
 }
