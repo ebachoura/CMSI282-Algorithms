@@ -1,5 +1,4 @@
 public class Tuple {
-  public static final Tuple IMPOSSIBLE = new Tuple(1);
 
   private int[] data;
   public Tuple(int n) {
@@ -11,15 +10,11 @@ public class Tuple {
           data[i] = 0;
       }
   }
-  public Tuple(int n, int m, int o) {
-      data = new int[3];
-      data[0] = n;
-      data[1] = m;
-      data[2] = o;
-  }
-
-  public boolean isImpossible() {
-      return this == IMPOSSIBLE;
+  public Tuple(int[] values) {
+      data = new int[values.length];
+      for (int i = 0; i < values.length; i++) {
+        data[i] = values[i];
+      }
   }
 
   public void setElement(int i, int j) {
@@ -57,10 +52,34 @@ public class Tuple {
       return true;
   }
 
-  public String toString() {
-      if (isImpossible()) {
+  public String toString(int[] p, int[] g) {
+      if (this == null) {
           return "0 items / $0 / 0 pounds";
       }
-      return ((data[0] == 1)? "" : (data[0] + " items / ")) + "$" + data[1] + " / " + data[2] + " pounds";
+      return (itemCount() == 1? "" : (itemCount() + " items / ")) + "$" + price(p) + " / " + gains(g) + " pounds";
+  }
+
+  private int itemCount() {
+      int count = 0;
+      for (int i = 0; i < data.length; i++) {
+        count+=i;
+      }
+      return count;
+  }
+
+  public int gains(int[] g) {
+    int gains = 0;
+    for (int i = 0; i < g.length; i++) {
+      gains += g[i]*data[i];
     }
+    return gains;
+  }
+
+  public int price(int[] p) {
+    int cost = 0;
+    for (int i = 0; i < p.length; i++) {
+      cost += p[i]*data[i];
+    }
+    return cost;
+  }
 }
