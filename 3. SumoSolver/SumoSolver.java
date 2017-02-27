@@ -38,7 +38,9 @@ public class SumoSolver {
 
   private void solveHelp(int x, int y) {
     System.out.println(x + ", " + y);
-    if (y != 0) {
+    if (y == 0) {
+      if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); chart[x][y].setElement(1, 1); }
+    } else if (y != 0) {
       if (prices[y] <= x) {
         if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); }
         chart[x][y].setElement(y, 1);
