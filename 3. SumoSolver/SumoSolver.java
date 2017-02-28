@@ -1,7 +1,7 @@
 public class SumoSolver {
   public static void main (String[] args) {
     try {
-      if (args.length%2 == 0 || args.length < 1 || Integer.parseInt(args[args.length - 1]) < 0) { throw new IllegalArgumentException(); }
+      if (args.length%2 == 0 || args.length < 1 || Integer.parseInt(args[args.length - 1]) <= 0) { throw new IllegalArgumentException(); }
       int numberOfItems = (args.length-1) / 2;
       int[] prices = new int[numberOfItems];
       int[] gains = new int[numberOfItems];
