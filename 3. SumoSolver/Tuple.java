@@ -62,7 +62,7 @@ public class Tuple {
   private int itemCount() {
       int count = 0;
       for (int i = 0; i < data.length; i++) {
-        count+=i;
+        count+=data[i];
       }
       return count;
   }
@@ -78,7 +78,7 @@ public class Tuple {
   public int price(int[] p) {
     int cost = 0;
     for (int i = 0; i < p.length; i++) {
-      cost += p[i]*data[i];
+      cost += (p[i]*data[i]);
     }
     return cost;
   }

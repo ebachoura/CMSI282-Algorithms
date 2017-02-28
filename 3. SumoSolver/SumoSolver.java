@@ -23,7 +23,7 @@ public class SumoSolver {
   public SumoSolver (int b, int items, int[] p, int[] g) {
     chart = new Tuple[b + 1][items];
     for (int i = 0; i < p.length; i++) {
-      chart[0][i] = new Tuple(3);
+      chart[0][i] = new Tuple(p.length);
     }
     prices = p;
     gains = g;
@@ -32,29 +32,28 @@ public class SumoSolver {
 
   public String solve() {
     Tuple answerBox = chart[budget][prices.length - 1];
+    System.out.println(java.util.Arrays.toString(prices));
     solveHelp(budget, prices.length - 1);
     return answerBox.toString(prices, gains);
   }
 
   private void solveHelp(int x, int y) {
-    System.out.println(x + ", " + y);
+    // System.out.println(x + ", " + y);
     if (y == 0) {
       if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); chart[x][y].setElement(1, 1); }
-    } else if (y != 0) {
+    } else {
       if (prices[y] <= x) {
-        if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); }
-        chart[x][y].setElement(y, 1);
+        if (chart[x][y] == null) { chart[x][y] = new Tuple(prices.length); chart[x][y].setElement(y, 1); }
         if (chart[x - prices[y]][y - 1] == null) { solveHelp(x - prices[y], y - 1); }
-        if (chart[x - prices[y]][y - 1] != null) {
+        if (chart[x - prices[y]][y - 1] != null && chart[x - prices[y]][y - 1].price(prices) + chart[x][y].price(prices) < x) {
           chart[x][y] = chart[x][y].add(chart[x - prices[y]][y - 1]);
-        } else { chart[x][y] = null; }
-      } else {
-        if (chart[x][y - 1] == null) { solveHelp(x, y - 1); }
-        if (chart[x][y] == null && chart[x][y - 1] == null) {
-        } else if ((chart[x][y-1] != null && chart[x][y] == null) || (chart[x][y-1].gains(gains) > chart[x][y].gains(gains))) {
-          chart[x][y] = chart[x][y - 1];
         }
       }
-    } return;
+      if (chart[x][y - 1] == null) { solveHelp(x, y - 1); }
+      if (chart[x][y] == null && chart[x][y - 1] == null) {
+      } else if ((chart[x][y-1] != null && chart[x][y] == null) || (chart[x][y-1].gains(gains) > chart[x][y].gains(gains))) {
+        chart[x][y] = chart[x][y - 1];
+      }
+    }
   }
 }
