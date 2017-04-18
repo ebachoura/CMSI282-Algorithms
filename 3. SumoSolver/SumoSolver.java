@@ -1,6 +1,6 @@
 public class SumoSolver {
   public static void main (String[] args) {
-    try {
+    // try {
       if (args.length%2 == 0 || args.length < 1 || Integer.parseInt(args[args.length - 1]) <= 0) { throw new IllegalArgumentException(); }
       int numberOfItems = (args.length-1) / 2;
       int[] prices = new int[numberOfItems];
@@ -13,7 +13,7 @@ public class SumoSolver {
       }
       SumoSolver keiryo = new SumoSolver(budget, numberOfItems, prices, gains);
       System.out.println(keiryo.solve());
-    } catch (Exception e) { System.err.println(e); }
+    // } catch (Exception e) { System.err.println(e); }
   }
 
   private Tuple[][] chart;
@@ -54,7 +54,7 @@ public class SumoSolver {
       }
       if (isNull(x, y - 1)) { solveHelp(x, y - 1); }
       if (!(isNull(x, y) && isNull(x, y - 1))) {
-        if (!isNull(x, y - 1) && isNull(x, y) || isGreater(chart[x][y-1], chart[x][y])) {
+        if (!isNull(x, y - 1) && isNull(x, y) || !isNull(x, y - 1) && !isNull(x, y) && isGreater(chart[x][y-1], chart[x][y])) {
           chart[x][y] = chart[x][y - 1];
         }
       }
