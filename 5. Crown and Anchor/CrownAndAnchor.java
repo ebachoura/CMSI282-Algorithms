@@ -11,7 +11,8 @@ class CrownAndAnchor {
     int NUMBER_OF_SIMULATIONS = 100;
     double WAGER_AMOUNT = 1;
 
-    if (args.length != 3 && args.length != 0) {
+    if (args.length == 0) {
+    } else if (args.length != 3) {
       System.out.println("You have an invalid number of arguments. If you would like, you could leave the arguments blank and the program will run the default simulation. Otherwise, make sure you have three arguments in this order: number of rounds, number of simulations, and wager amount per round.");
       return;
     } else {
@@ -32,7 +33,7 @@ class CrownAndAnchor {
     double average = (double) total / (double) NUMBER_OF_SIMULATIONS;
     double averagePercentageLost = average / ((double) NUMBER_OF_ROUNDS * WAGER_AMOUNT) * 100;
 
-    System.out.println("In " + NUMBER_OF_SIMULATIONS + " simulations of " + NUMBER_OF_ROUNDS + " rounds, there was an average net loss of " + average + " dollars per simulation, which means that there was an average net percent loss of " + averagePercentageLost + "% per hand.");
+    System.out.println("In " + NUMBER_OF_SIMULATIONS + " simulations of " + NUMBER_OF_ROUNDS + " rounds, there was an average net loss of " + average + " dollars per simulation, which means that there was an average net percent loss of " + averagePercentageLost + "% per hand. This game favors the House, as usually expected when gambling!");
   }
 
   private static int playRoundOfCrownAndAnchor (double bet) {
