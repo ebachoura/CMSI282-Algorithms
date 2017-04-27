@@ -1,6 +1,6 @@
 class CrownAndAnchor {
   /**
-   *Crown and Anchor simulation as described by Ray Toal on 4/18/2017. Written by Edward Bachoura.
+   *Crown and Anchor simulation as described by Ray Toal on 4/18/2017 for Prof. Dorin. Written by Edward Bachoura.
    *If you were to run the program with no args, the program defaults to 100,000 rounds
    *and 100 simulations, with each round having a bet of $1. Otherwise, you must put EXACTLY three arguments
    *in this order: number of rounds, number of simulations, and wager amount.
@@ -38,8 +38,9 @@ class CrownAndAnchor {
 
   private static int playRoundOfCrownAndAnchor (double bet) {
     int numberOfMatches = 0;
+    int symbolBet = (int) Math.floor(6 * Math.random() + 1);
     for (int i = 0; i < 3; i++) {
-      if ((int) Math.floor(6 * Math.random() + 1) == 3) { numberOfMatches++; }
+      if ((int) Math.floor(6 * Math.random() + 1) == symbolBet) { numberOfMatches++; }
     }
     return (int) ((numberOfMatches == 0)? -1.0 * bet : (double) numberOfMatches * bet);
   }
